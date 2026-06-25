@@ -1,18 +1,46 @@
-# Python cache
+# =========================
+# Python
+# =========================
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
 
 # Virtual environments
 .venv/
 venv/
 env/
 
-# VS Code
-.vscode/
-
 # Jupyter
 .ipynb_checkpoints/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE / editor
+.vscode/
+.idea/
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# =========================
+# Project-specific ignores
+# =========================
+
+# Large raw and processed datasets
+data/raw/
+data/interim/
+data/processed/
+data/splits/
+
+# Training artifacts and outputs
+outputs/checkpoints/
+outputs/logs/
+outputs/predictions/
+outputs/figures/
+
+# Optional local experiment files
+*.log
