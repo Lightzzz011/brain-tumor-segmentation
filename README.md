@@ -75,16 +75,6 @@ explainable-brain-tumor-segmentation/
 
 ---
 
-## Current Next Step
-
-Move to **Phase 2**:
-- finalize binary mask mapping rule
-- finalize 2D slice sample format and slice-selection strategy
-- finalize patient-wise train/validation/test split strategy
-- define the exact Phase 2 design deliverables before Phase 3 preprocessing begins
-
----
-
 ## Binary Segmentation Target
 
 The project uses a **binary whole-tumor segmentation target** derived from the BraTS multiclass labels.
