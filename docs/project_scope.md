@@ -39,6 +39,46 @@ Interpretation:
 - all non-zero BraTS tumor labels are merged into a single foreground class
 - the final binary segmentation target represents the **whole tumor region**
 
+### 2D Sample Format and Slice Strategy
+
+#### Slice Plane
+- Use **axial slices only**
+
+#### Input Sample Format
+Each processed input image sample will represent **one axial slice from one BraTS patient case**.
+
+Input image specification:
+- shape: **`[3, 224, 224]`**
+- channel order:
+  1. FLAIR
+  2. T1ce
+  3. T2
+
+#### Target Mask Format
+Each processed target mask will represent the binary whole-tumor mask for the same axial slice.
+
+Target mask specification:
+- shape: **`[1, 224, 224]`**
+- values: **`0` or `1`**
+
+#### Slice Retention Rule
+For each patient volume:
+1. convert the original BraTS mask to a binary whole-tumor mask
+2. identify all axial slice indices where the binary mask contains at least one tumor pixel
+3. let:
+   - `first_tumor_slice = min(tumor_slice_indices)`
+   - `last_tumor_slice = max(tumor_slice_indices)`
+4. retain all axial slices from:
+   - **2 slices before the first tumor-positive slice**
+   - through
+   - **2 slices after the last tumor-positive slice**
+5. clip the retained range to valid volume boundaries when needed
+
+Practical interpretation:
+- keep the entire tumor-containing axial region
+- include a small context margin around the tumor
+- discard far-away empty slices outside this retained band
+
 ## Planned Core Components
 1. Data preprocessing pipeline for BraTS MRI scans
 2. 2D slice extraction pipeline
@@ -51,6 +91,5 @@ Interpretation:
 
 ## Pending Phase 2 Decisions
 The following implementation details will be finalized before preprocessing code is written:
-1. exact 2D sample format and slice-selection strategy
-2. patient-wise train/validation/test split strategy
-3. exact deliverables required before Phase 3 begins
+1. patient-wise train/validation/test split strategy
+2. exact deliverables required before Phase 3 begins

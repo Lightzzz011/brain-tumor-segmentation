@@ -29,6 +29,7 @@ The currently locked core implementation scope is:
 - **Models:** Attention U-Net and TransUNet
 - **Dataset target:** **BraTS 2020 Training Dataset**
 - **Demo framework:** Streamlit
+- **2D sample format:** axial slices, 3-channel input (FLAIR + T1ce + T2), resized to 224 × 224
 
 ---
 
@@ -95,3 +96,26 @@ The project uses a **binary whole-tumor segmentation target** derived from the B
 
 In other words, **all non-zero BraTS tumor labels are merged into one foreground class**.  
 This means the segmentation target represents the **whole tumor region** rather than only one tumor subcomponent.
+
+---
+
+## 2D Slice Strategy
+
+The project uses an **axial 2D slice-based training pipeline**.
+
+### Input sample format
+Each training sample corresponds to **one axial slice from one BraTS patient case**.
+
+- **Input image shape:** `3 x 224 x 224`
+- **Input channels:** FLAIR, T1ce, T2
+- **Target mask shape:** `1 x 224 x 224`
+- **Target mask type:** binary whole-tumor mask
+
+### Slice retention rule
+For each patient volume:
+- find all axial slices containing tumor pixels in the binary mask
+- keep the tumor-containing slice range
+- extend that retained range by **2 slices before** the first tumor slice
+- extend it by **2 slices after** the last tumor slice
+
+This keeps the tumor region plus a small amount of surrounding context, while discarding far-away empty slices.
