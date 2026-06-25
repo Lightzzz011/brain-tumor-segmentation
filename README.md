@@ -27,7 +27,7 @@ The currently locked core implementation scope is:
 - **Input modalities:** FLAIR + T1ce + T2
 - **Excluded for initial build:** T1 modality
 - **Models:** Attention U-Net and TransUNet
-- **Dataset target:** BraTS 2020 or BraTS 2021
+- **Dataset target:** **BraTS 2020 Training Dataset**
 - **Demo framework:** Streamlit
 
 ---
@@ -72,3 +72,11 @@ explainable-brain-tumor-segmentation/
    └─ utils/
 
 ---
+
+## Current Next Step
+
+Move to **Phase 2**:
+- finalize binary mask mapping rule
+- finalize 2D slice sample format and slice-selection strategy
+- finalize patient-wise train/validation/test split strategy
+- define the exact Phase 2 design deliverables before Phase 3 preprocessing begins
