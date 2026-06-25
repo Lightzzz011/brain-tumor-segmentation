@@ -17,3 +17,22 @@ Planned items:
 ## Activation Command (CMD)
 ```cmd
 .venv\Scripts\activate
+
+
+## Base Packages Installed
+The following non-PyTorch packages were installed in the project virtual environment:
+
+- numpy
+- pandas
+- matplotlib
+- opencv-python
+- nibabel
+- scikit-learn
+- tqdm
+- pyyaml
+- jupyter
+
+## Base Environment Check
+A basic import verification script is available at:
+
+`src/utils/system_check.py`
