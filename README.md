@@ -30,6 +30,7 @@ The currently locked core implementation scope is:
 - **Dataset target:** **BraTS 2020 Training Dataset**
 - **Demo framework:** Streamlit
 - **2D sample format:** axial slices, 3-channel input (FLAIR + T1ce + T2), resized to 224 × 224
+- **Split strategy:** patient-wise 70 / 15 / 15 train-validation-test split
 
 ---
 
@@ -119,3 +120,21 @@ For each patient volume:
 - extend it by **2 slices after** the last tumor slice
 
 This keeps the tumor region plus a small amount of surrounding context, while discarding far-away empty slices.
+
+---
+
+## Data Split Strategy
+
+The project uses a **patient-wise** data split to avoid leakage between training and evaluation.
+
+### Split design
+- **70%** training patients
+- **15%** validation patients
+- **15%** test patients
+
+### Important rule
+All slices from the same BraTS patient case must remain in the **same split**.  
+No patient is allowed to appear across multiple splits.
+
+---
+

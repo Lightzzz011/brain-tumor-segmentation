@@ -79,17 +79,46 @@ Practical interpretation:
 - include a small context margin around the tumor
 - discard far-away empty slices outside this retained band
 
-## Planned Core Components
-1. Data preprocessing pipeline for BraTS MRI scans
-2. 2D slice extraction pipeline
-3. Attention U-Net training pipeline
-4. TransUNet training pipeline
-5. Segmentation evaluation and model comparison
-6. Explainability / heatmap visualization
-7. Tumor area and estimated volume analysis
-8. Streamlit demo interface
+### Patient-wise Train / Validation / Test Split Strategy
 
-## Pending Phase 2 Decisions
-The following implementation details will be finalized before preprocessing code is written:
-1. patient-wise train/validation/test split strategy
-2. exact deliverables required before Phase 3 begins
+#### Split Type
+- Use a **patient-wise split**, never a slice-wise split
+
+#### Split Percentages
+- **70% train**
+- **15% validation**
+- **15% test**
+
+#### Split Rules
+- each BraTS patient case belongs to exactly one split
+- all retained slices from a patient must remain in the same split
+- no patient may appear in more than one split
+- use a fixed random seed for reproducibility
+
+#### Planned Split Files
+The preprocessing pipeline will later generate and store patient-level split files at:
+
+- `data/splits/train_patients.csv`
+- `data/splits/val_patients.csv`
+- `data/splits/test_patients.csv`
+
+## Phase 2 Output Definition
+
+Before Phase 3 begins, the project must have a fully frozen preprocessing and dataset design covering:
+
+1. exact dataset choice
+2. exact binary mask mapping rule
+3. exact 2D sample format
+4. exact slice-retention strategy
+5. exact patient-wise split strategy
+
+## Phase 3 Implementation Target
+
+Phase 3 will implement the first actual data pipeline components:
+
+1. BraTS 2020 raw data download and folder placement
+2. raw data audit and metadata inspection
+3. binary mask conversion logic
+4. axial slice extraction using the locked slice-retention rule
+5. processed 2D sample generation in the locked format
+6. patient-wise split file generation
