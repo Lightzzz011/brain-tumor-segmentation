@@ -36,3 +36,27 @@ The following non-PyTorch packages were installed in the project virtual environ
 A basic import verification script is available at:
 
 `src/utils/system_check.py`
+
+## Deep Learning Stack
+Installed deep learning packages:
+- torch
+- torchvision
+- torchaudio
+
+PyTorch was installed using the official CUDA wheel index for GPU-enabled training.
+
+## Environment Validation Script
+Current environment verification script:
+`src/utils/system_check.py`
+
+This script checks:
+- base package imports
+- PyTorch import
+- CUDA availability
+- GPU name
+- a small tensor operation on GPU
+
+## PyTorch GPU Compatibility Note
+Initial installation using CUDA 11.8 wheels produced an `sm_120` compatibility warning for the NVIDIA GeForce RTX 5050 Laptop GPU.
+
+The environment was corrected by reinstalling PyTorch with the CUDA 12.8 wheel index for RTX 50-series GPU compatibility.
