@@ -7,3 +7,6 @@ scikit-learn
 tqdm
 pyyaml
 jupyter
+torch
+torchvision
+torchaudio
