@@ -80,3 +80,18 @@ Move to **Phase 2**:
 - finalize 2D slice sample format and slice-selection strategy
 - finalize patient-wise train/validation/test split strategy
 - define the exact Phase 2 design deliverables before Phase 3 preprocessing begins
+
+---
+
+## Binary Segmentation Target
+
+The project uses a **binary whole-tumor segmentation target** derived from the BraTS multiclass labels.
+
+### BraTS to binary mask mapping
+- `0 -> background`
+- `1 -> tumor`
+- `2 -> tumor`
+- `4 -> tumor`
+
+In other words, **all non-zero BraTS tumor labels are merged into one foreground class**.  
+This means the segmentation target represents the **whole tumor region** rather than only one tumor subcomponent.

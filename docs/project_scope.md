@@ -24,6 +24,21 @@ Explainable Brain Tumor Segmentation and Quantitative Analysis Using TransUNet a
 - T2
 - T1 excluded from the initial build
 
+### Binary Mask Mapping Rule
+The original BraTS multiclass segmentation mask will be converted into a **binary whole-tumor mask** using the following rule:
+
+- `0 -> 0` (background)
+- `1 -> 1` (tumor)
+- `2 -> 1` (tumor)
+- `4 -> 1` (tumor)
+
+Equivalent implementation rule:
+- **binary_mask = (original_mask > 0)**
+
+Interpretation:
+- all non-zero BraTS tumor labels are merged into a single foreground class
+- the final binary segmentation target represents the **whole tumor region**
+
 ## Planned Core Components
 1. Data preprocessing pipeline for BraTS MRI scans
 2. 2D slice extraction pipeline
@@ -36,7 +51,6 @@ Explainable Brain Tumor Segmentation and Quantitative Analysis Using TransUNet a
 
 ## Pending Phase 2 Decisions
 The following implementation details will be finalized before preprocessing code is written:
-1. exact binary mask mapping rule
-2. exact 2D sample format and slice-selection strategy
-3. patient-wise train/validation/test split strategy
-4. exact deliverables required before Phase 3 begins
+1. exact 2D sample format and slice-selection strategy
+2. patient-wise train/validation/test split strategy
+3. exact deliverables required before Phase 3 begins
