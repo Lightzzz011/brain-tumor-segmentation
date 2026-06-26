@@ -34,7 +34,12 @@ Thumbs.db
 data/raw/
 data/interim/
 data/processed/
-data/splits/
+
+# Ignore everything in splits except the official patient split CSVs
+data/splits/*
+!data/splits/train_patients.csv
+!data/splits/val_patients.csv
+!data/splits/test_patients.csv
 
 # Training artifacts and outputs
 outputs/checkpoints/
