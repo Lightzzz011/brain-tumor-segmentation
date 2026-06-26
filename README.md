@@ -1,4 +1,4 @@
-# Explainable Brain Tumor Segmentation and Quantitative Analysis Using TransUNet and Attention U-Net
+# Brain Tumor Segmentation and Quantitative Analysis Using TransUNet and Attention U-Net
 
 My mini project focused on brain tumor segmentation from MRI scans using deep learning, explainability, and quantitative tumor analysis : )
 
