@@ -50,7 +50,7 @@ BraTS MRI dataset
 ## Repository Structure
 
 ```text
-explainable-brain-tumor-segmentation/
+brain-tumor-segmentation/
 │
 ├─ configs/
 ├─ data/
