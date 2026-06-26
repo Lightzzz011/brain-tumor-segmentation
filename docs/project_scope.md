@@ -11,7 +11,9 @@ Explainable Brain Tumor Segmentation and Quantitative Analysis Using TransUNet a
 - Demo framework: Streamlit
 
 ### Dataset Decision
-- Primary dataset for the project: **BraTS 2020 Training Dataset**
+- Primary dataset for the project: **Dataset:
+BraTS Adult Glioma (GLI) Training Dataset
+Distributed via the BraTS 2023 Synapse project.**
 - Reason for selection:
   - sufficient for binary brain tumor segmentation
   - easier to use for a 2D slice-based mini-project pipeline

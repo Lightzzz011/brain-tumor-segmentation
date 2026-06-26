@@ -15,7 +15,8 @@ Reference pages:
 
 The raw BraTS 2020 dataset will be stored inside the repository under:
 
-data/raw/brats2020/
+data/raw/BraTS Adult Glioma (GLI) Training Dataset
+(distributed via the BraTS 2023 Synapse project)/
 
 ### Intended subfolders
 
@@ -25,7 +26,8 @@ Purpose:
 - keep the untouched source download separate from extracted contents
 
 Path:
-- `data/raw/brats2020/original_download/`
+- `data/raw/BraTS Adult Glioma (GLI) Training Dataset
+(distributed via the BraTS 2023 Synapse project)/original_download/`
 
 #### 2) extracted/
 Purpose:
@@ -33,14 +35,17 @@ Purpose:
 - this folder will later be inspected by the raw-data audit and preprocessing pipeline
 
 Path:
-- `data/raw/brats2020/extracted/`
+- `data/raw/BraTS Adult Glioma (GLI) Training Dataset
+(distributed via the BraTS 2023 Synapse project)/extracted/`
 
 ## Raw Data Handling Rules
 1. Download BraTS 2020 only from the official approved access route.
 2. Place original downloaded archive files inside:
-   - `data/raw/brats2020/original_download/`
+   - `data/raw/BraTS Adult Glioma (GLI) Training Dataset
+(distributed via the BraTS 2023 Synapse project)/original_download/`
 3. Extract the dataset inside:
-   - `data/raw/brats2020/extracted/`
+   - `data/raw/BraTS Adult Glioma (GLI) Training Dataset
+(distributed via the BraTS 2023 Synapse project)/extracted/`
 4. Do not manually rename patient folders or MRI files after extraction.
 5. Raw data should remain untouched; all later transformations belong in preprocessing outputs, not in the raw dataset folder.
 

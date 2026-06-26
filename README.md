@@ -27,7 +27,7 @@ The currently locked core implementation scope is:
 - **Input modalities:** FLAIR + T1ce + T2
 - **Excluded for initial build:** T1 modality
 - **Models:** Attention U-Net and TransUNet
-- **Dataset target:** **BraTS 2020 Training Dataset**
+- **Dataset target:** **BraTS Adult Glioma (GLI) Training Dataset distributed via the BraTS 2023 Synapse project Training Dataset**
 - **Demo framework:** Streamlit
 - **2D sample format:** axial slices, 3-channel input (FLAIR + T1ce + T2), resized to 224 × 224
 - **Split strategy:** patient-wise 70 / 15 / 15 train-validation-test split
