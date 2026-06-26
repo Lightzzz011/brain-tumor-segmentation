@@ -1,51 +1,74 @@
 from pathlib import Path
+
 import nibabel as nib
 import numpy as np
+import pandas as pd
 
 DATASET_ROOT = Path(
     "data/raw/brats_gli_2023/extracted/ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData"
 )
 
+OUTPUT_ROOT = Path("data/processed/sample_patient")
+IMAGE_DIR = OUTPUT_ROOT / "images"
+MASK_DIR = OUTPUT_ROOT / "masks"
+
+IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+MASK_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def load(path):
+    return nib.load(str(path)).get_fdata()
+
 
 def main():
 
-    patients = sorted([p for p in DATASET_ROOT.iterdir() if p.is_dir()])
+    patient = sorted([p for p in DATASET_ROOT.iterdir() if p.is_dir()])[0]
 
-    patient = patients[0]
+    print(f"Processing {patient.name}")
 
-    print("=" * 60)
-    print(f"Patient : {patient.name}")
-    print("=" * 60)
+    flair = load(patient / f"{patient.name}-t2f.nii.gz")
+    t1ce = load(patient / f"{patient.name}-t1c.nii.gz")
+    t2 = load(patient / f"{patient.name}-t2w.nii.gz")
+    seg = load(patient / f"{patient.name}-seg.nii.gz")
 
-    mask_path = patient / f"{patient.name}-seg.nii.gz"
-
-    mask = nib.load(str(mask_path)).get_fdata()
-
-    binary_mask = mask > 0
-
-    depth = binary_mask.shape[2]
+    binary = (seg > 0).astype(np.uint8)
 
     positive = [
-        i
-        for i in range(depth)
-        if np.any(binary_mask[:, :, i])
+        i for i in range(binary.shape[2])
+        if np.any(binary[:, :, i])
     ]
 
-    first_slice = min(positive)
-    last_slice = max(positive)
+    start = max(0, min(positive) - 2)
+    end = min(binary.shape[2] - 1, max(positive) + 2)
 
-    start = max(0, first_slice - 2)
-    end = min(depth - 1, last_slice + 2)
+    metadata = []
 
-    retained = end - start + 1
+    for idx in range(start, end + 1):
 
-    print(f"Volume depth          : {depth}")
-    print(f"Tumor slices          : {len(positive)}")
-    print(f"First tumor slice     : {first_slice}")
-    print(f"Last tumor slice      : {last_slice}")
-    print(f"Retained start slice  : {start}")
-    print(f"Retained end slice    : {end}")
-    print(f"Retained slice count  : {retained}")
+        image = np.stack([
+            flair[:, :, idx],
+            t1ce[:, :, idx],
+            t2[:, :, idx]
+        ], axis=-1).astype(np.float32)
+
+        mask = binary[:, :, idx]
+
+        np.save(IMAGE_DIR / f"{idx:03d}.npy", image)
+        np.save(MASK_DIR / f"{idx:03d}.npy", mask)
+
+        metadata.append({
+            "patient_id": patient.name,
+            "slice_index": idx,
+            "has_tumor": bool(np.any(mask))
+        })
+
+    pd.DataFrame(metadata).to_csv(
+        OUTPUT_ROOT / "metadata.csv",
+        index=False
+    )
+
+    print(f"Saved {len(metadata)} slices.")
+    print("Done.")
 
 
 if __name__ == "__main__":
